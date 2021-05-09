@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/galfyn/my_projects/get_next_line/get_next_line.c
+get_next_line.h
+/Users/galfyn/my_projects/get_next_line/get_next_line.h
+
+/Users/galfyn/my_projects/get_next_line/get_next_line.h
+stdlib.h
+-
+unistd.h
+-
+
