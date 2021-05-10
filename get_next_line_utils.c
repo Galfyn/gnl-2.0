@@ -1,10 +1,9 @@
-
 #include "get_next_line.h"
 
-char    *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t  i;
-	char *str;
+	size_t	i;
+	char	*str;
 
 	str = (char *) s;
 	i = 0;
@@ -28,5 +27,3 @@ size_t	ft_strlen(const char *s)
 	}
 	return (i);
 }
-
-

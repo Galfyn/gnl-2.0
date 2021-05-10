@@ -1,0 +1,8 @@
+.gitignore
+.*
+*txt
+cmake-build-debug
+CMakeLists.txt
+normal.txt
+.DS_Store
+cmake-build-debug/*

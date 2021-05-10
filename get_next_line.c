@@ -1,4 +1,3 @@
-
 #include "get_next_line.h"
 
 static char	*gnl_strjoin(char const *s1, char const *s2)
@@ -20,34 +19,66 @@ static char	*gnl_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-static char *gnl_copy(char *remain)
+static char	*gnl_copy(char const *remain)
 {
 	size_t	i;
+	size_t	j;
 	char	*str;
 
-	i =0;
-	str = "";
-	while (remain[i] != '\0')
-	{
+	i = 0;
+	while (remain[i] != '\n' && remain[i] != '\0')
 		i++;
-		if (remain[i] == '\n')
-			while (i--)
-			{
-				str[i] = remain[i];
-			}
+	str = malloc(sizeof (char) * (i + 1));
+	if (!str)
+		return (NULL);
+	j = 0;
+	while (remain[j] != '\n' && remain[j] != '\0')
+	{
+		str[j] = remain[j];
+		j++;
 	}
+	str[j] = '\0';
 	return (str);
 }
 
-int		get_next_line(int fd, char **line)
+char	*ft_clean(char *remain)
+{
+	size_t	i;
+	size_t	j;
+	char	*tmp;
+
+	i = 0;
+	j = 0;
+	tmp = "";
+	while (remain[i] != '\n' && remain[i] != '\0')
+		i++;
+	if (remain[i] == '\0')
+	{
+		free(remain);
+		return (NULL);
+	}
+	if (remain[i++] == '\n')
+	{
+		tmp = malloc(sizeof(char) * (ft_strlen(remain) - i) + 1);
+		if (!tmp)
+			return (NULL);
+		while (remain[i] != '\0')
+			tmp[j++] = remain[i++];
+	}
+	tmp[j] = '\0';
+	free(remain);
+	return (tmp);
+}
+
+int	get_next_line(int fd, char **line)
 {
 	static char	*remain;
-	size_t 		read_size;
-	char 		*buf;
-	char 		*tmp;
+	size_t		read_size;
+	char		*buf;
+	char		*tmp;
 
 	read_size = 1;
-	if (fd < 0 || !line || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (-1);
 	buf = malloc(sizeof (char) * (BUFFER_SIZE + 1));
 	while ((remain == NULL || !ft_strchr(remain, '\n')) && read_size > 0)
@@ -58,10 +89,9 @@ int		get_next_line(int fd, char **line)
 		remain = gnl_strjoin(remain, buf);
 		if (tmp)
 			free(tmp);
-		if (!remain)
-			return (-1);
 	}
 	*line = gnl_copy(remain);
+	remain = ft_clean(remain);
 	free(buf);
 	if (read_size == 0)
 		return (0);

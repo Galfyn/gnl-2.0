@@ -16,5 +16,7 @@ int main()
 	{
 		res = get_next_line(fd, &line);
 		printf("%d | %s\n", res, line);
+		//free(line);
 	}
+	//while (1);
 }
