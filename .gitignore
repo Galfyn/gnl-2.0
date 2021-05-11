@@ -6,3 +6,4 @@ CMakeLists.txt
 normal.txt
 .DS_Store
 cmake-build-debug/*
+main.c
